@@ -10,7 +10,7 @@ const userSchema = new mongoose.Schema(
         avatar: {type: String},
         city: {type: String},
         isDoctor:{type: Boolean, default: false},
-        describe:{type: String, default:''}
+       
     },{
         // Sẽ có thời gian tạo và update
         timestamps: true

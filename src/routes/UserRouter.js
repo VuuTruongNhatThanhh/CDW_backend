@@ -5,6 +5,7 @@ const { authMiddleware, authUserMiddleware } = require("../middleware/authMiddle
 
 // Thiết kế theo mô hình MVC thì router sẽ gọi qua controller
 router.post('/sign-up', userController.createUser )
+router.post('/checkemail', userController.checkEmail )
 router.post('/sign-in', userController.loginUser )
 router.post('/log-out', userController.logoutUser )
 router.put('/update-user/:id',authUserMiddleware, userController.updateUser )

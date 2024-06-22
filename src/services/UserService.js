@@ -42,6 +42,22 @@ const createUser = (newUser) =>{
     })
 }
 
+const checkEmail = (email) =>{
+    return new Promise(async(resolve, reject) =>{
+        // console.log('emailSv',email)
+        try{
+            // Check xem email đã tồn tại trong db hay chưa, nếu chưa tồn tại trả về null
+          
+       
+           
+         
+            
+        }catch(e){
+            reject(e)
+        }
+    })
+}
+
 const loginUser = (userLogin) =>{
     return new Promise(async(resolve, reject) =>{
         const {email, password} = userLogin
@@ -236,6 +252,7 @@ module.exports = {
     deleteUser,
     getAllUser,
     getDetailsUser,
-    deleteManyUser
+    deleteManyUser,
+    checkEmail
   
 }

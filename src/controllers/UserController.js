@@ -1,6 +1,6 @@
 const UserService = require('../services/UserService')
 const JwtService = require('../services/JwtService')
-
+const User = require("../models/UserModel")
 // Controller sẽ gọi qua service
 const createUser = async(req, res) => {
     try{
@@ -33,6 +33,47 @@ const createUser = async(req, res) => {
     //   Nếu không dính các trường hợp trên thì đưa cái request qua bên service (req.body)
       const response =   await UserService.createUser(req.body)
         return res.status(200).json(response)
+    } catch (e) {
+        return res.status(404).json({
+            message: e
+        })
+    }
+}  
+
+const checkEmail = async(req, res) => {
+    try{
+        // Lấy ra những thuộc tính request sau khi send bằng TC
+        // req.body mình có thể dùng console log in ra khi nhập thông tin từ json content vào, nó hiển thị ở cmd, hiển thị đầy đủ thuộc tính của user
+        const { email} = req.body
+       
+            const reg = /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/
+            const isCheckEmail = reg.test(email)
+
+        if(!isCheckEmail){
+                return res.status(200).json({
+                    status: 'ERR',
+                    message: 'Không đúng định dạng Email'
+
+                }) 
+            } 
+    //   Nếu không dính các trường hợp trên thì đưa cái request qua bên service (req.body)
+    const checkUser = await User.findOne({
+        email : email
+    })
+    // console.log('checkusser',checkUser)
+  if(checkUser!==null){
+    return res.status(200).json({
+        status: 'ERH',
+        message: 'Email đã tồn tại trong hệ thống'
+
+    }) 
+  }
+
+  return res.status(200).json({
+    status: 'OK',
+    message: 'Email hợp lệ và chưa tồn tại trong hệ thống'
+});
+        
     } catch (e) {
         return res.status(404).json({
             message: e
@@ -241,5 +282,6 @@ module.exports = {
     getDetailsUser,
     refreshToken,
     logoutUser,
-    deleteMany
+    deleteMany,
+    checkEmail
 } 
